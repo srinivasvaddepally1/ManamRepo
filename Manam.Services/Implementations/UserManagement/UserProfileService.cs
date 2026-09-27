@@ -34,7 +34,7 @@ public class UserProfileService : IUserProfileService
                 return null;
             }
 
-            _logger.LogInformation("Profile fetched successfully for user ID: {UserId}", userId);
+            var profile = new UserProfileResponse
             {
                 UserId = userId,
                 Username = "john.doe",

@@ -89,7 +89,7 @@ public class UserProfileController : ControllerBase
             {
                 Success = false,
                 Message = "An unexpected error occurred",
-                Errors = new[] { ex.Message }
+                Errors = CreateErrors(ex.Message)
             });
         }
     }
@@ -154,7 +154,7 @@ public class UserProfileController : ControllerBase
             {
                 Success = false,
                 Message = "An unexpected error occurred",
-                Errors = new[] { ex.Message }
+                Errors = CreateErrors(ex.Message)
             });
         }
     }
@@ -208,7 +208,7 @@ public class UserProfileController : ControllerBase
             {
                 Success = false,
                 Message = "An unexpected error occurred",
-                Errors = new[] { ex.Message }
+                Errors = CreateErrors(ex.Message)
             });
         }
     }
@@ -280,7 +280,7 @@ public class UserProfileController : ControllerBase
             {
                 Success = false,
                 Message = "An unexpected error occurred",
-                Errors = new[] { ex.Message }
+                Errors = CreateErrors(ex.Message)
             });
         }
     }
@@ -339,7 +339,7 @@ public class UserProfileController : ControllerBase
             {
                 Success = false,
                 Message = "An unexpected error occurred",
-                Errors = new[] { ex.Message }
+                Errors = CreateErrors(ex.Message)
             });
         }
     }
@@ -412,7 +412,7 @@ public class UserProfileController : ControllerBase
             {
                 Success = false,
                 Message = "An unexpected error occurred",
-                Errors = new[] { ex.Message }
+                Errors = CreateErrors(ex.Message)
             });
         }
     }
@@ -478,7 +478,7 @@ public class UserProfileController : ControllerBase
             {
                 Success = false,
                 Message = "An unexpected error occurred",
-                Errors = new[] { ex.Message }
+                Errors = CreateErrors(ex.Message)
             });
         }
     }
@@ -495,6 +495,14 @@ public class UserProfileController : ControllerBase
             return userId;
 
         return 0;
+    }
+
+    private static Dictionary<string, string[]> CreateErrors(params string[] errors)
+    {
+        return new Dictionary<string, string[]>
+        {
+            ["General"] = errors
+        };
     }
 }
 

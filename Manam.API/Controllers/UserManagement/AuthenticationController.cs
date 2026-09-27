@@ -53,7 +53,7 @@ public class AuthenticationController : ControllerBase
                 {
                     Success = false,
                     Message = "Login request cannot be null",
-                    Errors = new[] { "Invalid request body" }
+                    Errors = CreateErrors("Invalid request body")
                 });
             }
 
@@ -89,7 +89,7 @@ public class AuthenticationController : ControllerBase
             {
                 Success = false,
                 Message = "An unexpected error occurred during login",
-                Errors = new[] { ex.Message }
+                Errors = CreateErrors(ex.Message)
             });
         }
     }
@@ -119,7 +119,7 @@ public class AuthenticationController : ControllerBase
                 {
                     Success = false,
                     Message = "Register request cannot be null",
-                    Errors = new[] { "Invalid request body" }
+                    Errors = CreateErrors("Invalid request body")
                 });
             }
 
@@ -155,7 +155,7 @@ public class AuthenticationController : ControllerBase
             {
                 Success = false,
                 Message = "An unexpected error occurred during registration",
-                Errors = new[] { ex.Message }
+                Errors = CreateErrors(ex.Message)
             });
         }
     }
@@ -185,7 +185,7 @@ public class AuthenticationController : ControllerBase
                 {
                     Success = false,
                     Message = "Email is required",
-                    Errors = new[] { "Email cannot be empty" }
+                    Errors = CreateErrors("Email cannot be empty")
                 });
             }
 
@@ -215,7 +215,7 @@ public class AuthenticationController : ControllerBase
             {
                 Success = false,
                 Message = "An unexpected error occurred",
-                Errors = new[] { ex.Message }
+                Errors = CreateErrors(ex.Message)
             });
         }
     }
@@ -274,7 +274,7 @@ public class AuthenticationController : ControllerBase
             {
                 Success = false,
                 Message = "An unexpected error occurred",
-                Errors = new[] { ex.Message }
+                Errors = CreateErrors(ex.Message)
             });
         }
     }
@@ -333,7 +333,7 @@ public class AuthenticationController : ControllerBase
             {
                 Success = false,
                 Message = "An unexpected error occurred",
-                Errors = new[] { ex.Message }
+                Errors = CreateErrors(ex.Message)
             });
         }
     }
@@ -355,6 +355,14 @@ public class AuthenticationController : ControllerBase
     private string GetUserAgent()
     {
         return HttpContext.Request.Headers["User-Agent"].ToString() ?? "Unknown";
+    }
+
+    private static Dictionary<string, string[]> CreateErrors(params string[] errors)
+    {
+        return new Dictionary<string, string[]>
+        {
+            ["General"] = errors
+        };
     }
 }
 
