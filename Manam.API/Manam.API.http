@@ -1,6 +1,317 @@
-@Manam.API_HostAddress = http://localhost:5120
+###############################################################################
+# Manam API - REST Client Testing
+# Use this file with REST Client extension in VS Code
+# Base URL: https://localhost:7001 (or http://localhost:5000 for HTTP)
+###############################################################################
 
-GET {{Manam.API_HostAddress}}/weatherforecast/
-Accept: application/json
+@baseUrl = https://localhost:7001
+@contentType = application/json
 
-###
+###############################################################################
+# AUTHENTICATION ENDPOINTS
+###############################################################################
+
+### Register New User - John Doe
+POST {{baseUrl}}/api/v1/authentication/register
+Content-Type: {{contentType}}
+
+{
+  "email": "john.doe@example.com",
+  "username": "johndoe",
+  "password": "SecurePassword@123",
+  "firstName": "John",
+  "lastName": "Doe",
+  "ipAddress": "192.168.1.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+}
+
+### Register New User - Jane Smith
+POST {{baseUrl}}/api/v1/authentication/register
+Content-Type: {{contentType}}
+
+{
+  "email": "jane.smith@gmail.com",
+  "username": "janesmith",
+  "password": "SecurePass@456",
+  "firstName": "Jane",
+  "lastName": "Smith",
+  "ipAddress": "192.168.1.2",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"
+}
+
+### Register New User - Admin Account
+POST {{baseUrl}}/api/v1/authentication/register
+Content-Type: {{contentType}}
+
+{
+  "email": "admin@manam.com",
+  "username": "admin",
+  "password": "AdminPass@789",
+  "firstName": "Admin",
+  "lastName": "User",
+  "ipAddress": "192.168.1.100",
+  "userAgent": "Mozilla/5.0 (X11; Linux x86_64)"
+}
+
+### User Login - Valid Credentials
+POST {{baseUrl}}/api/v1/authentication/login
+Content-Type: {{contentType}}
+
+{
+  "email": "john.doe@example.com",
+  "password": "SecurePassword@123",
+  "ipAddress": "192.168.1.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+}
+
+### User Login - Invalid Password
+POST {{baseUrl}}/api/v1/authentication/login
+Content-Type: {{contentType}}
+
+{
+  "email": "john.doe@example.com",
+  "password": "WrongPassword",
+  "ipAddress": "192.168.1.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+}
+
+### User Login - Non-existent Email
+POST {{baseUrl}}/api/v1/authentication/login
+Content-Type: {{contentType}}
+
+{
+  "email": "nonexistent@example.com",
+  "password": "SomePassword@123",
+  "ipAddress": "192.168.1.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+}
+
+###############################################################################
+# USER PROFILE ENDPOINTS (Requires Authorization)
+###############################################################################
+
+### Get Current User Profile (Requires JWT Token)
+# Note: Replace {token} with actual JWT token from login response
+GET {{baseUrl}}/api/v1/userprofile/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+### Update User Profile
+PATCH {{baseUrl}}/api/v1/userprofile/update
+Content-Type: {{contentType}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+{
+  "firstName": "John",
+  "lastName": "Doe-Updated",
+  "email": "john.doe.updated@example.com"
+}
+
+### Delete User Profile (Soft Delete)
+DELETE {{baseUrl}}/api/v1/userprofile/delete
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+###############################################################################
+# USER MANAGEMENT ENDPOINTS
+###############################################################################
+
+### Get All Users
+GET {{baseUrl}}/api/v1/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+### Get User by ID
+GET {{baseUrl}}/api/v1/users/550e8400-e29b-41d4-a716-446655440000
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+### Create User (Admin Only)
+POST {{baseUrl}}/api/v1/users
+Content-Type: {{contentType}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+{
+  "username": "newuser",
+  "email": "newuser@example.com",
+  "passwordHash": "$2a$11$...",
+  "firstName": "New",
+  "lastName": "User",
+  "isActive": true
+}
+
+### Update User (Admin Only)
+PUT {{baseUrl}}/api/v1/users/550e8400-e29b-41d4-a716-446655440000
+Content-Type: {{contentType}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+{
+  "firstName": "Updated",
+  "lastName": "User",
+  "email": "updated@example.com",
+  "isActive": true
+}
+
+### Delete User (Admin Only - Soft Delete)
+DELETE {{baseUrl}}/api/v1/users/550e8400-e29b-41d4-a716-446655440000
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+###############################################################################
+# PASSWORD MANAGEMENT ENDPOINTS
+###############################################################################
+
+### Change Password
+POST {{baseUrl}}/api/v1/authentication/change-password
+Content-Type: {{contentType}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+{
+  "currentPassword": "SecurePassword@123",
+  "newPassword": "NewSecurePassword@456",
+  "confirmPassword": "NewSecurePassword@456"
+}
+
+### Forgot Password - Request Reset
+POST {{baseUrl}}/api/v1/authentication/forgot-password
+Content-Type: {{contentType}}
+
+{
+  "email": "john.doe@example.com"
+}
+
+### Reset Password with Token
+POST {{baseUrl}}/api/v1/authentication/reset-password
+Content-Type: {{contentType}}
+
+{
+  "token": "reset_token_from_email",
+  "email": "john.doe@example.com",
+  "newPassword": "ResetPassword@789",
+  "confirmPassword": "ResetPassword@789"
+}
+
+###############################################################################
+# ROLE MANAGEMENT ENDPOINTS (Admin Only)
+###############################################################################
+
+### Get All Roles
+GET {{baseUrl}}/api/v1/roles
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+### Create Role
+POST {{baseUrl}}/api/v1/roles
+Content-Type: {{contentType}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+{
+  "roleName": "Editor",
+  "description": "Users who can edit content"
+}
+
+### Assign Role to User
+POST {{baseUrl}}/api/v1/users/550e8400-e29b-41d4-a716-446655440000/roles
+Content-Type: {{contentType}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+{
+  "roleId": "650e8400-e29b-41d4-a716-446655440001"
+}
+
+### Remove Role from User
+DELETE {{baseUrl}}/api/v1/users/550e8400-e29b-41d4-a716-446655440000/roles/650e8400-e29b-41d4-a716-446655440001
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+###############################################################################
+# EXTERNAL LOGIN / OAUTH ENDPOINTS
+###############################################################################
+
+### Link Gmail Account
+POST {{baseUrl}}/api/v1/authentication/link-external-login
+Content-Type: {{contentType}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+{
+  "provider": "Google",
+  "providerKey": "103849012345678901234",
+  "providerDisplayName": "john.doe@gmail.com"
+}
+
+### Link Facebook Account
+POST {{baseUrl}}/api/v1/authentication/link-external-login
+Content-Type: {{contentType}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+{
+  "provider": "Facebook",
+  "providerKey": "1234567890123456",
+  "providerDisplayName": "John Doe"
+}
+
+### Unlink External Login
+DELETE {{baseUrl}}/api/v1/authentication/unlink-external-login
+Content-Type: {{contentType}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+{
+  "provider": "Google"
+}
+
+### Get Linked External Logins
+GET {{baseUrl}}/api/v1/authentication/external-logins
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+###############################################################################
+# ACCOUNT LOCKOUT ENDPOINTS
+###############################################################################
+
+### Lock User Account (Admin Only)
+POST {{baseUrl}}/api/v1/users/550e8400-e29b-41d4-a716-446655440000/lockout
+Content-Type: {{contentType}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+{
+  "lockoutDurationMinutes": 30,
+  "reason": "Too many failed login attempts"
+}
+
+### Unlock User Account (Admin Only)
+POST {{baseUrl}}/api/v1/users/550e8400-e29b-41d4-a716-446655440000/unlock
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+### Reset Failed Login Attempts (Admin Only)
+POST {{baseUrl}}/api/v1/users/550e8400-e29b-41d4-a716-446655440000/reset-failed-attempts
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+###############################################################################
+# AUDIT LOG ENDPOINTS
+###############################################################################
+
+### Get Audit Logs for User (Admin Only)
+GET {{baseUrl}}/api/v1/audit-logs?userId=550e8400-e29b-41d4-a716-446655440000
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+### Get Audit Logs for Action (Admin Only)
+GET {{baseUrl}}/api/v1/audit-logs?action=LOGIN&pageNumber=1&pageSize=20
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+###############################################################################
+# HEALTH CHECK ENDPOINTS
+###############################################################################
+
+### API Health Check
+GET {{baseUrl}}/health
+
+### API Status
+GET {{baseUrl}}/api/v1/status
+
+###############################################################################
+# NOTES
+###############################################################################
+#
+# 1. Replace {{baseUrl}} with your actual API base URL
+# 2. Replace authorization tokens with actual JWT tokens from login response
+# 3. Replace GUIDs with actual user IDs from your database
+# 4. Sample payloads are provided for reference
+# 5. Adjust content based on your API requirements
+# 6. Use REST Client extension in VS Code to run these requests
+#
+# Installation: "REST Client" extension by Huachao Mao in VS Code
+# Usage: Click "Send Request" or press Ctrl+Alt+R above each request
+#
+###############################################################################
