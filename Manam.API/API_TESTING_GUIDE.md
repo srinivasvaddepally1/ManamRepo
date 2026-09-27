@@ -60,11 +60,11 @@ Content-Type: application/json
   "username": "username",
   "password": "SecurePassword@123",
   "firstName": "First",
-  "lastName": "Last",
-  "ipAddress": "192.168.1.1",
-  "userAgent": "Mozilla/5.0..."
+  "lastName": "Last"
 }
 ```
+
+**Note:** IP address and User Agent are automatically captured from the HTTP request context server-side.
 
 **Response:**
 ```json
@@ -86,11 +86,11 @@ Content-Type: application/json
 
 {
   "email": "user@example.com",
-  "password": "SecurePassword@123",
-  "ipAddress": "192.168.1.1",
-  "userAgent": "Mozilla/5.0..."
+  "password": "SecurePassword@123"
 }
 ```
+
+**Note:** IP address and User Agent are automatically captured from the HTTP request context server-side.
 
 **Response:**
 ```json

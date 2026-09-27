@@ -57,9 +57,13 @@ public class AuthenticationController : ControllerBase
                 });
             }
 
-            // Set IP address and User agent from request
-            request.IpAddress ??= GetClientIpAddress();
-            request.UserAgent ??= GetUserAgent();
+            // Automatically capture IP address and User agent from HTTP request context
+            // These are captured from the server, not from client-provided values
+            request.IpAddress = GetClientIpAddress();
+            request.UserAgent = GetUserAgent();
+            
+            _logger.LogInformation("Login attempt from IP: {IpAddress}, UserAgent: {UserAgent}", 
+                request.IpAddress, request.UserAgent);
 
             var result = await _authService.LoginAsync(request);
 
@@ -123,9 +127,13 @@ public class AuthenticationController : ControllerBase
                 });
             }
 
-            // Set IP address and User agent from request
-            request.IpAddress ??= GetClientIpAddress();
-            request.UserAgent ??= GetUserAgent();
+            // Automatically capture IP address and User agent from HTTP request context
+            // These are captured from the server, not from client-provided values
+            request.IpAddress = GetClientIpAddress();
+            request.UserAgent = GetUserAgent();
+            
+            _logger.LogInformation("Registration attempt from IP: {IpAddress}, UserAgent: {UserAgent}", 
+                request.IpAddress, request.UserAgent);
 
             var result = await _authService.RegisterAsync(request);
 

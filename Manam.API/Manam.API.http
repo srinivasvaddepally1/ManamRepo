@@ -20,9 +20,7 @@ Content-Type: {{contentType}}
   "username": "johndoe",
   "password": "SecurePassword@123",
   "firstName": "John",
-  "lastName": "Doe",
-  "ipAddress": "192.168.1.1",
-  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+  "lastName": "Doe"
 }
 
 ### Register New User - Jane Smith
@@ -34,9 +32,7 @@ Content-Type: {{contentType}}
   "username": "janesmith",
   "password": "SecurePass@456",
   "firstName": "Jane",
-  "lastName": "Smith",
-  "ipAddress": "192.168.1.2",
-  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"
+  "lastName": "Smith"
 }
 
 ### Register New User - Admin Account
@@ -48,9 +44,7 @@ Content-Type: {{contentType}}
   "username": "admin",
   "password": "AdminPass@789",
   "firstName": "Admin",
-  "lastName": "User",
-  "ipAddress": "192.168.1.100",
-  "userAgent": "Mozilla/5.0 (X11; Linux x86_64)"
+  "lastName": "User"
 }
 
 ### User Login - Valid Credentials
@@ -59,9 +53,7 @@ Content-Type: {{contentType}}
 
 {
   "email": "john.doe@example.com",
-  "password": "SecurePassword@123",
-  "ipAddress": "192.168.1.1",
-  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+  "password": "SecurePassword@123"
 }
 
 ### User Login - Invalid Password
@@ -70,9 +62,7 @@ Content-Type: {{contentType}}
 
 {
   "email": "john.doe@example.com",
-  "password": "WrongPassword",
-  "ipAddress": "192.168.1.1",
-  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+  "password": "WrongPassword"
 }
 
 ### User Login - Non-existent Email
@@ -81,9 +71,7 @@ Content-Type: {{contentType}}
 
 {
   "email": "nonexistent@example.com",
-  "password": "SomePassword@123",
-  "ipAddress": "192.168.1.1",
-  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+  "password": "SomePassword@123"
 }
 
 ###############################################################################
