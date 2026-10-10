@@ -1,5 +1,3 @@
-using Manam.Storage.Abstractions;
-using Manam.Storage.Implementations;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Manam.Storage.Extensions;
@@ -16,8 +14,7 @@ public static class StorageServiceCollectionExtensions
     /// <returns>The service collection for chaining</returns>
     public static IServiceCollection AddStorageServices(this IServiceCollection services)
     {
-        // Register repositories as scoped - one instance per HTTP request
-        services.AddScoped<IUserRepository, UserRepository>();
+        // Repositories to be implemented
 
         return services;
     }

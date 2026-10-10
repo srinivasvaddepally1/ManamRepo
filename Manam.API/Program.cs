@@ -28,8 +28,8 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 // Add services from all projects using extension methods
 builder.Services.AddDatabaseClientServices(connectionString);
-builder.Services.AddStorageServices();
-builder.Services.AddBusinessServices();
+builder.Services.AddServices();
+builder.Services.AddUserManagementServices();
 builder.Services.AddAuthenticationServices();
 
 // Add CORS
