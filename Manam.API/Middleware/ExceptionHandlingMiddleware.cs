@@ -1,9 +1,17 @@
 using System.Net;
-using Manam.Models;
 using Microsoft.AspNetCore.Http;
 using Serilog;
 
 namespace Manam.API.Middleware;
+
+/// <summary>
+/// Simple error response model
+/// </summary>
+public class ErrorResponse
+{
+    public string Message { get; set; } = string.Empty;
+    public string TraceId { get; set; } = string.Empty;
+}
 
 /// <summary>
 /// Middleware for global exception handling
