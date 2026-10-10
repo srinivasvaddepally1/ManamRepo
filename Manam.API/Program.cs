@@ -1,8 +1,6 @@
 using Manam.API.Middleware;
 using Manam.Auth.Extensions;
 using Manam.DatabaseClient.Extensions;
-using Manam.Services.Extensions;
-using Manam.Storage.Extensions;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,8 +26,6 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 // Add services from all projects using extension methods
 builder.Services.AddDatabaseClientServices(connectionString);
-builder.Services.AddServices();
-builder.Services.AddUserManagementServices();
 builder.Services.AddAuthenticationServices();
 
 // Add CORS

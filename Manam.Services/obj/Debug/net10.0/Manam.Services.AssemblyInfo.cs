@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Manam.Services")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fd408703fc82ca15694629fab9a79d96ad767adb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cdb804289903554a647bd42fc01855d4f9256934")]
 [assembly: System.Reflection.AssemblyProductAttribute("Manam.Services")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Manam.Services")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
